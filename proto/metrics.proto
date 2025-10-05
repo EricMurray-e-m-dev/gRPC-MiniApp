@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package package.name;
+
+option go_package = "grpc-proof/proto/metrics";
+
+// Service definition
+service MetricsService {
+    // Client streams metrics, server responds once
+    rpc StreamMetrics(stream Metric) returns (Ack);
+}
+
+// A single metric data point
+message Metric {
+    string  name        = 1;    // Metric name - cpu_usage, mom_usage 
+    double  value       = 2;    // Numeric value
+    int64   timestamp   = 3;    // Unix timestamp
+}
+
+
+// Ack knowledgement response from server
+message Ack { 
+    bool    success     = 1;    // Success status
+    string  message     = 2;    // Optional Error/Status message
+}
